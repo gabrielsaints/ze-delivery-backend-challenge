@@ -16,7 +16,7 @@ services:
       - MONGO_HOST=db_mongodb
       - MONGO_PORT=${MONGO_PORT}
       - MONGO_DB_NAME=${MONGO_DB_NAME}
-      - MONGO_COLLECTION_NAME=pdvs
+      - MONGO_COLLECTION_NAME=partners
     depends_on:
       - db_mongodb
     volumes:
