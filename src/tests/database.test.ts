@@ -12,6 +12,6 @@ describe("Database", () => {
 
   test("`database` should return error if doens't exists any MONGO_URI environment variable", async () => {
     expect.assertions(1);
-    await expect(Database.connect(null)).rejects.toThrow();
+    await expect(Database.connect(false)).rejects.toThrow();
   });
 });

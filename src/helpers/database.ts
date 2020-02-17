@@ -1,11 +1,33 @@
 import mongoose from "mongoose";
 
-// mongoose.set('debug', true);
+interface NoSQLConnection {
+  name: string;
+  port: number;
+  host: string;
+}
+
+if (process.env.ENVIRONMENT === "development") {
+  mongoose.set("debug", true);
+}
 
 abstract class Database {
   public static async connect(
-    uri: string | null | undefined = process.env.MONGO_URI
-  ) {
+    connection?: NoSQLConnection | false
+  ): Promise<boolean> {
+    if (connection === false) {
+      throw new Error("env variable `MONGO_URI` cannot be empty or null");
+    }
+
+    if (!connection) {
+      connection = {
+        host: process.env.MONGO_HOST!,
+        port: Number(process.env.MONGO_PORT!),
+        name: process.env.MONGO_DB_NAME!
+      };
+    }
+
+    const uri = `mongodb://${connection.host}:${connection.port}/${connection.name}`;
+
     if (!Database.getUri(uri)) {
       throw new Error("env variable `MONGO_URI` cannot be empty or null");
     }
@@ -22,7 +44,7 @@ abstract class Database {
     return true;
   }
 
-  public static async disconnect() {
+  public static async disconnect(): Promise<void> {
     await mongoose.disconnect();
   }
 

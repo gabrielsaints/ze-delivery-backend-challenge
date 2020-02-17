@@ -1,9 +1,23 @@
 version: "3"
 services:
-  mongo:
+  db_mongodb:
     image: mongo
-    container_name: mongo-example
+    container_name: ze-delivery
     ports:
-      - "27017:27017"
+      - "27017:${MONGO_PORT}"
     volumes:
       - ./__data__:/data/db
+
+  import:
+    image: bwnyasse/docker-mongodb-worker
+    container_name: ze-delivery-import
+    command: "/start.sh -i"
+    environment:
+      - MONGO_HOST=db_mongodb
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+      - MONGO_COLLECTION_NAME=pdvs
+    depends_on:
+      - db_mongodb
+    volumes:
+      - $PWD:/tmp/mongodb/:rw
