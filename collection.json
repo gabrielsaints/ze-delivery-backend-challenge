@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "c05c8dcc-f447-410b-b18f-1f10c9e74311",
+		"name": "bov-control",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/animals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/animals",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"animals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/animals/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/animals/5e401b5c8d2ae6059cd0add6",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"animals",
+						"5e401b5c8d2ae6059cd0add6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/animals",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Joshua\",\n\t\"ageInMonths\": 2,\n\t\"weight\": 100,\n\t\"type\": \"Bos Taurus\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/animals",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"animals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/animals",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Robert\",\n\t\"id\": \"5e401b5c8d2ae6059cd0add6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/animals",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"animals"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
