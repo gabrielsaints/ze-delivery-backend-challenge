@@ -1,5 +1,5 @@
-import app from './app';
-import Database from './helpers/database';
+import app from "./app";
+import Database from "./config/database";
 
 (async () => {
   await Database.connect();

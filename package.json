@@ -1,5 +1,5 @@
 {
-  "name": "bov-control",
+  "name": "ze-delivery",
   "author": "Gabriel Santos <gabr1el_santos@hotmail.com>",
   "scripts": {
     "predev": "yarn build",

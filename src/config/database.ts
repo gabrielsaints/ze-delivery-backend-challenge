@@ -6,7 +6,7 @@ interface NoSQLConnection {
   host: string;
 }
 
-if (process.env.ENVIRONMENT === "development") {
+if (process.env.MONGOOSE_DEBUG === "on") {
   mongoose.set("debug", true);
 }
 

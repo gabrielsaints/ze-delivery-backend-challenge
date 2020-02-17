@@ -1,4 +1,4 @@
-import Database from "../../helpers/database";
+import Database from "../../config/database";
 
 abstract class Normalize {
   public static async beforeAll() {
