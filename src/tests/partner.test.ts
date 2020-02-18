@@ -2,8 +2,9 @@ import Normalize from "./utils/normalize";
 import Partner, { isPartner } from "../models/partners";
 import chance from "./utils/chance";
 import randomPartner from "./mocks/randomPartner";
+import mockPartners from "./mocks/mockPartners";
 
-describe("Partners", () => {
+describe("Model Partners", () => {
   beforeAll(async () => Normalize.beforeAll());
 
   afterAll(async () => Normalize.afterAll());
@@ -31,22 +32,85 @@ describe("Partners", () => {
     expect(response).toBe(null);
   });
 
-  test("`save & remove` should add a new partner and remove him", async () => {
-    expect.assertions(4);
+  test('`randomPartner` should return a randomized partner of "import.json" list', async () => {
+    expect.assertions(3);
+
+    const random = randomPartner();
+
+    expect(random).toBeDefined();
+
+    const partner = new Partner(random);
+
+    await partner.save();
+
+    expect(partner).toBeInstanceOf(Partner);
+    expect(isPartner(partner)).toBe(true);
+
+    await partner.remove();
+  });
+
+  test("`save` should add a new partner and then remove him", async () => {
+    expect.assertions(3);
 
     const partner = new Partner(randomPartner());
 
     await partner.save();
 
-    let found = await Partner.findById(partner.id);
+    const found = await Partner.findById(partner.id);
 
     expect(found).toBeDefined();
     expect(found).toBeInstanceOf(Partner);
-    expect(isPartner(partner.serialize())).toBe(true);
+    expect(isPartner(await partner.serialize())).toBe(true);
 
     await partner.remove();
-    found = await Partner.findById(partner.id);
+  });
 
-    expect(found).toBe(null);
+  test("`save` should update a partner and then remove him", async () => {
+    expect.assertions(7);
+
+    const partner = new Partner(randomPartner());
+
+    await partner.save();
+
+    const first = await Partner.findById(partner.id);
+
+    expect(first).toBeDefined();
+    expect(first).toBeInstanceOf(Partner);
+
+    if (first) {
+      expect(isPartner(await first.serialize())).toBe(true);
+    }
+
+    partner.ownerName = chance.name();
+
+    await partner.save();
+
+    const second = await Partner.findById(partner.id);
+
+    expect(second).toBeDefined();
+    expect(second).toBeInstanceOf(Partner);
+
+    if (second) {
+      expect(isPartner(await second.serialize())).toBe(true);
+    }
+
+    expect(first?.ownerName).not.toEqual(second?.ownerName);
+
+    await partner.remove();
+  });
+
+  test("`mockPartners` should be able to return a pack of partners and insert it", async () => {
+    expect.assertions(3);
+
+    const partnersMock = mockPartners();
+    expect(partnersMock).toBeDefined();
+    await Partner.insertMany(partnersMock);
+
+    let partners = await Partner.find({});
+    expect(partners).toHaveLength(partnersMock.length);
+
+    await Partner.deleteMany({});
+    partners = await Partner.find({});
+    expect(partners).toHaveLength(0);
   });
 });

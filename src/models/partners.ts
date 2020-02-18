@@ -30,7 +30,7 @@ export interface PartnerDocument extends Document {
   document: string;
   coverageArea: GeolocationCoverageArea;
   address: GeolocationAddress;
-  serialize: () => PartnerSerialized;
+  serialize: () => Promise<PartnerSerialized>;
   distanceBetween: (latitude: number, longitude: number) => number;
 }
 
@@ -74,7 +74,7 @@ const partnerSchema = new Schema({
   }
 });
 
-partnerSchema.methods.serialize = function(): PartnerSerialized {
+partnerSchema.methods.serialize = async function(): Promise<PartnerSerialized> {
   const partner: PartnerSerialized = {
     _id: this.id,
     address: this.address,

@@ -5,8 +5,13 @@ import { Types } from "mongoose";
 
 import RequestError from "../helpers/request-error";
 
+type FieldTypeRequest = "params" | "query" | "body";
+
 abstract class Validate {
-  public static fields(field: string, schema: ObjectSchema): RequestHandler {
+  public static fields(
+    field: FieldTypeRequest,
+    schema: ObjectSchema
+  ): RequestHandler {
     return (req, _, next) => {
       try {
         let data = {};
