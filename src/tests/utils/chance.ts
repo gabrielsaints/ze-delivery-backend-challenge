@@ -13,6 +13,14 @@ class ExtendedChance extends Chance {
   public objectId(): any {
     return Types.ObjectId();
   }
+
+  public latitude(): number {
+    return super.floating({ min: -89, max: 89 });
+  }
+
+  public longitude(): number {
+    return super.floating({ min: -179.9, max: 179.9 });
+  }
 }
 
 export default new ExtendedChance();

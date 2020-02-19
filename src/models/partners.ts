@@ -34,7 +34,16 @@ export interface PartnerDocument extends Document {
   distanceBetween: (latitude: number, longitude: number) => number;
 }
 
-type PartnerModel = Model<PartnerDocument>;
+interface MyLocationInterface {
+  latitude: number;
+  longitude: number;
+}
+
+interface PartnerModel extends Model<PartnerDocument> {
+  findByMyLocation: (
+    location: MyLocationInterface
+  ) => Promise<PartnerDocument | null>;
+}
 
 const partnerSchema = new Schema({
   tradingName: {
@@ -61,7 +70,6 @@ const partnerSchema = new Schema({
       required: true
     }
   },
-  // TODO: adicionar index 2dsphere
   address: {
     type: {
       type: String,
@@ -102,6 +110,38 @@ partnerSchema.methods.distanceBetween = function distanceBetween(
       longitude: this.address.coordinates[0]
     }
   });
+};
+
+partnerSchema.statics.findByMyLocation = async function findByMyLocation(
+  location: MyLocationInterface
+): Promise<PartnerDocument | null> {
+  const nearst = await this.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [location.longitude, location.latitude]
+        },
+        spherical: true,
+        distanceField: "distanceInMeters",
+        query: {
+          coverageArea: {
+            $geoIntersects: {
+              $geometry: {
+                type: "Point",
+                coordinates: [location.longitude, location.latitude]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      $limit: 1
+    }
+  ]);
+
+  return nearst[0] || null;
 };
 
 partnerSchema.pre<PartnerDocument>("save", function(next) {

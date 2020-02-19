@@ -109,8 +109,37 @@ describe("Model Partners", () => {
     let partners = await Partner.find({});
     expect(partners).toHaveLength(partnersMock.length);
 
-    // await Partner.deleteMany({});
+    await Partner.deleteMany({});
     partners = await Partner.find({});
     expect(partners).toHaveLength(0);
+  });
+
+  test("`findByMyLocation` should be able to return the nearst", async () => {
+    expect.assertions(3);
+
+    const partnersMock = mockPartners();
+    await Partner.insertMany(partnersMock);
+
+    const near = await Partner.findByMyLocation({
+      latitude: -23.6142,
+      longitude: -46.627
+    });
+
+    await Partner.deleteMany({});
+
+    expect(near).toBeDefined();
+    expect(near?.tradingName).toMatch("Adega Sao Paulo");
+    expect(near?.ownerName).toMatch("Rai da Silva");
+  });
+
+  test("`findByMyLocation` should return null with random location", async () => {
+    expect.assertions(1);
+
+    const near = await Partner.findByMyLocation({
+      latitude: chance.latitude(),
+      longitude: chance.longitude()
+    });
+
+    expect(near).toBe(null);
   });
 });
