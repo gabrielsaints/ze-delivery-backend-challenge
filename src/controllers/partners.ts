@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import Partner, { PartnerSchema } from "../models/partners";
 import RequestError from "../helpers/request-error";
 
-const all: RequestHandler = async (req, res, next) => {
+export const all: RequestHandler = async (req, res, next) => {
   try {
     const partners = await Partner.find({});
 
@@ -14,7 +14,25 @@ const all: RequestHandler = async (req, res, next) => {
   }
 };
 
-const store: RequestHandler = async (req, res, next) => {
+export const unique: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const partner = await Partner.findById(id);
+
+    if (!partner) {
+      throw new RequestError(404, "no partner found");
+    }
+
+    res.status(200).json({
+      partner: await partner.serialize()
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const store: RequestHandler = async (req, res, next) => {
   try {
     const {
       ownerName,
@@ -48,4 +66,25 @@ const store: RequestHandler = async (req, res, next) => {
   }
 };
 
-export { all, store };
+export const getNearby: RequestHandler = async (req, res, next) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    const partner = await Partner.findByMyLocation({
+      longitude,
+      latitude
+    });
+
+    if (!partner) {
+      throw new RequestError(404, "no partner nearby");
+    }
+
+    partner.__v = undefined;
+
+    res.status(200).json({
+      partner: partner
+    });
+  } catch (err) {
+    next(err);
+  }
+};

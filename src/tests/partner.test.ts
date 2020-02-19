@@ -3,6 +3,7 @@ import Partner, { isPartner } from "../models/partners";
 import chance from "./utils/chance";
 import randomPartner from "./mocks/randomPartner";
 import mockPartners from "./mocks/mockPartners";
+import mockLocation from "./mocks/mockLocation";
 
 describe("Model Partners", () => {
   beforeAll(async () => Normalize.beforeAll());
@@ -120,10 +121,7 @@ describe("Model Partners", () => {
     const partnersMock = mockPartners();
     await Partner.insertMany(partnersMock);
 
-    const near = await Partner.findByMyLocation({
-      latitude: -23.6142,
-      longitude: -46.627
-    });
+    const near = await Partner.findByMyLocation(mockLocation);
 
     await Partner.deleteMany({});
 

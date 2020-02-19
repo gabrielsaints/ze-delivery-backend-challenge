@@ -1,8 +1,13 @@
 import Joi from "@hapi/joi";
+import objectId from "./objectId";
 
 const latitudeAndLongitude = Joi.array()
   .items(Joi.number().required(), Joi.number().required())
   .length(2);
+
+export const getPartner = Joi.object().keys({
+  id: objectId
+});
 
 export const postPartners = Joi.object().keys({
   ownerName: Joi.string().required(),
@@ -30,4 +35,15 @@ export const postPartners = Joi.object().keys({
       )
       .required()
   })
+});
+
+export const getPartnersNearby = Joi.object().keys({
+  latitude: Joi.number()
+    .max(90)
+    .min(-90)
+    .required(),
+  longitude: Joi.number()
+    .max(180)
+    .min(-180)
+    .required()
 });

@@ -1,5 +1,4 @@
 import { Document, model, Model, Schema } from "mongoose";
-import { calculateDistance } from "../helpers/distance";
 
 export interface GeolocationCoverageArea {
   type: "MultiPolygon";
@@ -23,6 +22,11 @@ export interface PartnerSerialized extends PartnerSchema {
   _id: string;
 }
 
+export interface PartnerMyLocation extends PartnerSerialized {
+  distanceInMeters: number;
+  __v?: any;
+}
+
 export interface PartnerDocument extends Document {
   _id: string;
   tradingName: string;
@@ -31,7 +35,6 @@ export interface PartnerDocument extends Document {
   coverageArea: GeolocationCoverageArea;
   address: GeolocationAddress;
   serialize: () => Promise<PartnerSerialized>;
-  distanceBetween: (latitude: number, longitude: number) => number;
 }
 
 interface MyLocationInterface {
@@ -42,7 +45,7 @@ interface MyLocationInterface {
 interface PartnerModel extends Model<PartnerDocument> {
   findByMyLocation: (
     location: MyLocationInterface
-  ) => Promise<PartnerDocument | null>;
+  ) => Promise<PartnerMyLocation | null>;
 }
 
 const partnerSchema = new Schema({
@@ -98,24 +101,11 @@ partnerSchema.methods.serialize = async function(): Promise<PartnerSerialized> {
   return partner;
 };
 
-// Used to calculate the distance between a given location to address location
-partnerSchema.methods.distanceBetween = function distanceBetween(
-  longitude: number,
-  latitude: number
-): number {
-  return calculateDistance({
-    from: { longitude, latitude },
-    to: {
-      latitude: this.address.coordinates[1],
-      longitude: this.address.coordinates[0]
-    }
-  });
-};
-
 partnerSchema.statics.findByMyLocation = async function findByMyLocation(
+  this: PartnerModel,
   location: MyLocationInterface
-): Promise<PartnerDocument | null> {
-  const nearst = await this.aggregate([
+): Promise<PartnerMyLocation | null> {
+  const [nearby] = await this.aggregate([
     {
       $geoNear: {
         near: {
@@ -141,7 +131,7 @@ partnerSchema.statics.findByMyLocation = async function findByMyLocation(
     }
   ]);
 
-  return nearst[0] || null;
+  return nearby || null;
 };
 
 partnerSchema.pre<PartnerDocument>("save", function(next) {
