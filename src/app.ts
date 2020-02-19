@@ -5,7 +5,6 @@ import cors from "cors";
 
 import errors from "./middlewares/error";
 
-import exampleRoutes from "./routes/example";
 import partnersRoutes from "./routes/partners";
 
 import "./config/env";
@@ -31,7 +30,6 @@ class App implements AppInterface {
   }
 
   private routes(): void {
-    this.server.use(exampleRoutes);
     this.server.use(partnersRoutes);
   }
 

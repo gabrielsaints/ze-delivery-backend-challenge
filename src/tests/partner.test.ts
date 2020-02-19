@@ -109,7 +109,7 @@ describe("Model Partners", () => {
     let partners = await Partner.find({});
     expect(partners).toHaveLength(partnersMock.length);
 
-    await Partner.deleteMany({});
+    // await Partner.deleteMany({});
     partners = await Partner.find({});
     expect(partners).toHaveLength(0);
   });

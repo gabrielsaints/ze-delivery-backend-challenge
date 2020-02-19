@@ -61,6 +61,7 @@ const partnerSchema = new Schema({
       required: true
     }
   },
+  // TODO: adicionar index 2dsphere
   address: {
     type: {
       type: String,
@@ -73,6 +74,8 @@ const partnerSchema = new Schema({
     }
   }
 });
+
+partnerSchema.index({ address: "2dsphere" });
 
 partnerSchema.methods.serialize = async function(): Promise<PartnerSerialized> {
   const partner: PartnerSerialized = {
@@ -116,5 +119,7 @@ const Partner: PartnerModel = model<PartnerDocument, PartnerModel>(
   "Partner",
   partnerSchema
 );
+
+Partner.createIndexes();
 
 export default Partner;
