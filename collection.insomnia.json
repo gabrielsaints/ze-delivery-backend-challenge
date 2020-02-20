@@ -1,0 +1,160 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2020-02-20T00:36:15.385Z",
+  "__export_source": "insomnia.desktop.app:v7.1.0",
+  "resources": [
+    {
+      "_id": "req_d46b609fb36542b4bcd1acbb8fb04514",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n    \"tradingName\": \"Bar do GB\",\n    \"ownerName\": \"Gabriel dos Santos Goncalves\",\n    \"document\": \"111222333445\",\n    \"coverageArea\": {\n      \"type\": \"MultiPolygon\",\n      \"coordinates\": [\n        [\n          [\n            [-38.56586, -3.85041],\n            [-38.49599, -3.87361],\n            [-38.45033, -3.90358],\n            [-38.42304, -3.90273],\n            [-38.37892, -3.88971],\n            [-38.35566, -3.8844],\n            [-38.39557, -3.82497],\n            [-38.41531, -3.80133],\n            [-38.42771, -3.76754],\n            [-38.44251, -3.75054],\n            [-38.45672, -3.75024],\n            [-38.46562, -3.74746],\n            [-38.46525, -3.74657],\n            [-38.46616, -3.74458],\n            [-38.46507, -3.74083],\n            [-38.47256, -3.73743],\n            [-38.47844, -3.72759],\n            [-38.49002, -3.72476],\n            [-38.49573, -3.72254],\n            [-38.51226, -3.71384],\n            [-38.51736, -3.74292],\n            [-38.52517, -3.7681],\n            [-38.53095, -3.78294],\n            [-38.53415, -3.79124],\n            [-38.5412, -3.79573],\n            [-38.55148, -3.80326],\n            [-38.55796, -3.82],\n            [-38.5656, -3.84839],\n            [-38.56586, -3.85041]\n          ]\n        ]\n      ]\n    },\n    \"address\": {\n      \"type\": \"Point\",\n      \"coordinates\": [-38.495586, -3.809936]\n    }\n  }"
+      },
+      "created": 1582158275776,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_1254760c206049239aef0f0f60e57c0d",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1582158275776,
+      "method": "POST",
+      "modified": 1582158901289,
+      "name": "/partners",
+      "parameters": [],
+      "parentId": "fld_f68f742b7e5744ef861d70179ef7eae5",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingFollowRedirects": "global",
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/partners",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_f68f742b7e5744ef861d70179ef7eae5",
+      "created": 1582157702439,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1581690542032,
+      "modified": 1582157708388,
+      "name": "ze-delivery",
+      "parentId": "wrk_104773c175bf4810b8cf17b28c059d38",
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_104773c175bf4810b8cf17b28c059d38",
+      "created": 1581445191598,
+      "description": "",
+      "modified": 1581686933804,
+      "name": "Gabriel",
+      "parentId": null,
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_f4048c514c924a208284a8d066412d6b",
+      "authentication": {},
+      "body": {},
+      "created": 1582158141951,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1582158141951,
+      "method": "GET",
+      "modified": 1582158265285,
+      "name": "/partners/nearby",
+      "parameters": [
+        {
+          "description": "",
+          "id": "pair_e3316a79c3b3433a8d2bc3883b5ea9a7",
+          "name": "latitude",
+          "value": "{{ latitude  }}"
+        },
+        {
+          "description": "",
+          "id": "pair_627cc6f015ae49148ea034486ca1cb94",
+          "name": "longitude",
+          "value": "{{ longitude  }}"
+        }
+      ],
+      "parentId": "fld_f68f742b7e5744ef861d70179ef7eae5",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingFollowRedirects": "global",
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/partners/nearby",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d67c86329ed64d5c814f2d2f5062e1cd",
+      "authentication": {},
+      "body": {},
+      "created": 1582158045108,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1582158045108,
+      "method": "GET",
+      "modified": 1582158365231,
+      "name": "/partners/:id",
+      "parameters": [],
+      "parentId": "fld_f68f742b7e5744ef861d70179ef7eae5",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingFollowRedirects": "global",
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/partners/5e4dd20740119644481c935b",
+      "_type": "request"
+    },
+    {
+      "_id": "req_92ea7f1723964043b79f05729b8318bc",
+      "authentication": {},
+      "body": {},
+      "created": 1582157715397,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1582157715398,
+      "method": "GET",
+      "modified": 1582157797827,
+      "name": "/partners",
+      "parameters": [],
+      "parentId": "fld_f68f742b7e5744ef861d70179ef7eae5",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingFollowRedirects": "global",
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/partners",
+      "_type": "request"
+    },
+    {
+      "_id": "env_2bdb21052db446618c5d3a548f3b625c",
+      "color": "#f1e800",
+      "created": 1582157723247,
+      "data": {
+        "base_url": "http://127.0.0.1:3333",
+        "latitude": -23.6142,
+        "longitude": -46.627
+      },
+      "dataPropertyOrder": { "&": ["base_url", "latitude", "longitude"] },
+      "isPrivate": false,
+      "metaSortKey": 1582157723247,
+      "modified": 1582158261839,
+      "name": "ze-delivery",
+      "parentId": "env_081add347bf06d60da8cf51b56cd8e447dc663e4",
+      "_type": "environment"
+    }
+  ]
+}

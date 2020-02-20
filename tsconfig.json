@@ -19,7 +19,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "baseUrl": "./"
   },
   "include": ["scripts/", "src"],
   "exclude": ["node_modules"],
